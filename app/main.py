@@ -38,4 +38,4 @@ def create_product(
 
 @app.get('/products', response_model=list[schemas.Product])
 def get_all_products(db: Session = Depends(get_db)):
-    ...
+    return crud.get_products(db=db)
