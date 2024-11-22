@@ -49,3 +49,19 @@ def get_product_by_id(product_id: int, db: Session = Depends(get_db)):
             status_code=status.HTTP_404_NOT_FOUND, detail='Product not found'
         )
     return product
+
+
+@app.put('/products/{product_id}', response_model=schemas.Product)
+def update_product(
+    product_id: int,
+    product: schemas.ProductCreate,
+    db: Session = Depends(get_db),
+):
+    updated_product = crud.update_product(
+        db=db, product_id=product_id, updated_product=product
+    )
+    if not updated_product:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail='Product not found'
+        )
+    return updated_product

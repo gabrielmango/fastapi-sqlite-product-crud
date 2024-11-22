@@ -33,7 +33,7 @@ def update_product(
     )
     if not product:
         raise None
-    for key, value in update_product.dict().items():
+    for key, value in updated_product.dict().items():
         setattr(product, key, value)
     db.commit()
     db.refresh(product)
