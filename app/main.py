@@ -34,3 +34,8 @@ def create_product(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail='An unexpected error occurred while creating the product.',
             )
+
+
+@app.get('/products', response_model=list[schemas.Product])
+def get_all_products(db: Session = Depends(get_db)):
+    ...
