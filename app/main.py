@@ -26,7 +26,7 @@ def create_product(
 
         if 'CHECK constraint failed' in str(e):
             raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
+                status_code=v.HTTP_400_BAD_REQUEST,
                 detail='The product price must be greater than zero.',
             )
         else:
@@ -39,3 +39,13 @@ def create_product(
 @app.get('/products', response_model=list[schemas.Product])
 def get_all_products(db: Session = Depends(get_db)):
     return crud.get_products(db=db)
+
+
+@app.get('/products/{product_id}', response_model=schemas.Product)
+def get_product_by_id(product_id: int, db: Session = Depends(get_db)):
+    product = crud.get_product(db=db, product_id=product_id)
+    if not product:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail='Product not found'
+        )
+    return product
