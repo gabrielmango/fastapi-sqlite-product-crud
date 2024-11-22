@@ -65,3 +65,9 @@ def update_product(
             status_code=status.HTTP_404_NOT_FOUND, detail='Product not found'
         )
     return updated_product
+
+
+@app.delete('/products/{product_id}', response_model=dict)
+def delete_product(product_id: int, db: Session = Depends(get_db)):
+    crud.delete_product(db=db, product_id=product_id)
+    return {'message': 'Product deleted successfully'}
