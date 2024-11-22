@@ -38,3 +38,16 @@ def update_product(
     db.commit()
     db.refresh(product)
     return product
+
+
+def delete_product(db: Session, product_id: int):
+    product = (
+        db.query(models.Product)
+        .filter(models.Product.id == product_id)
+        .first()
+    )
+    if not product:
+        raise None
+    db.delete(product)
+    db.commit()
+    return product
