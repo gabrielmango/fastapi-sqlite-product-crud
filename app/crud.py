@@ -21,3 +21,20 @@ def get_product(db: Session, product_id: int):
         .filter(models.Product.id == product_id)
         .first()
     )
+
+
+def update_product(
+    db: Session, product_id: int, updated_product: schemas.ProductCreate
+):
+    product = (
+        db.query(models.Product)
+        .filter(models.Product.id == product_id)
+        .first()
+    )
+    if not product:
+        raise None
+    for key, value in update_product.dict().items():
+        setattr(product, key, value)
+    db.commit()
+    db.refresh(product)
+    return product

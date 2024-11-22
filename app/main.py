@@ -26,7 +26,7 @@ def create_product(
 
         if 'CHECK constraint failed' in str(e):
             raise HTTPException(
-                status_code=v.HTTP_400_BAD_REQUEST,
+                status_code=status.HTTP_400_BAD_REQUEST,
                 detail='The product price must be greater than zero.',
             )
         else:
